@@ -1,0 +1,36 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: lca_backend
+    env_file:
+      - .env
+    environment:
+      APP_RUN_BASE_DIR: /app/runs
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./runs:/app/runs
+      - ./data:/app/data:ro
+      - ./models.yaml:/app/models.yaml:ro
+    networks:
+      - lca_net
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: lca_frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+    networks:
+      - lca_net
+    restart: unless-stopped
+
+networks:
+  lca_net:
+    driver: bridge

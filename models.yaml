@@ -1,0 +1,44 @@
+# Per-agent LLM routing (spec §13).
+# Verify exact model IDs and pricing at https://openrouter.ai/models
+# IDs hier sind Konfiguration — ändern ohne Image-Rebuild (mounted volume).
+#
+# Pipeline-Stand 2026-05-26: vier Agenten rufen das LLM:
+#   - research: Baujahr-Recherche (web_search) + Outlier-Kommentare
+#   - material: UUID-Vorschläge wenn carrier_map.yaml unvollständig
+#   - reporting: KI-Empfehlungen + Hotspot-Analyse (web_search für Sanierungs-Standards)
+#   - master: aktuell nur als Default-Routing-Slot reserviert
+#
+# Sonnet für Reasoning-intensive Tasks (reporting), gpt-oss-120b für günstige
+# Web-Recherche (research), Haiku für Routine-Strukturierung (material, validation).
+
+agents:
+  master:
+    tier: strong
+    model: anthropic/claude-sonnet-4
+  research:
+    tier: mid
+    model: openai/gpt-4o-mini      # gpt-4o-mini: openrouter:web_search server-tool stabil
+  material:
+    tier: fast
+    model: anthropic/claude-haiku-4-5
+  energy:
+    tier: fast
+    model: anthropic/claude-haiku-4-5
+  reporting:
+    tier: mid
+    model: anthropic/claude-sonnet-4   # Reasoning für Sanierungs-Empfehlungen
+  geometry:
+    tier: fast
+    model: anthropic/claude-haiku-4-5
+  vegetation:
+    tier: fast
+    model: anthropic/claude-haiku-4-5
+
+# Escalation pro Agent (Spec §13: nur bei Validierungs-Alarm).
+escalation:
+  research: anthropic/claude-sonnet-4
+  geometry: anthropic/claude-sonnet-4
+  material: anthropic/claude-sonnet-4
+  energy: anthropic/claude-sonnet-4
+  vegetation: anthropic/claude-sonnet-4
+  reporting: anthropic/claude-sonnet-4

@@ -1,0 +1,61 @@
+# LLM-Preise pro 1.000 Token (USD), per Modell-ID — Spec §13.
+#
+# Pflege diese Tabelle parallel zu models.yaml. Preise ändern sich
+# häufig; vor jedem Thesis-relevanten Lauf gegen die aktuellen
+# OpenRouter-Preise (https://openrouter.ai/models) abgleichen und
+# das Datum + die Quelle hier dokumentieren.
+
+source: "OpenRouter Modell-Preisliste — manuell abgeglichen"
+checked_on: "2026-05-29"
+unit: "USD / 1k tokens"
+currency: "USD"
+
+# input  = prompt-Tokens
+# output = completion-Tokens
+# Tatsächliche Abrechnung bei OpenRouter erfolgt nach 1M Tokens; wir
+# normalisieren intern auf 1k für übersichtlichere Werte. Die Logik
+# in llm/router.py multipliziert tokens/1000 mit dem Wert hier.
+models:
+
+  anthropic/claude-opus-4:
+    input: 0.015
+    output: 0.075
+
+  anthropic/claude-sonnet-4:
+    input: 0.003
+    output: 0.015
+
+  anthropic/claude-haiku-4-5:
+    input: 0.001
+    output: 0.005
+
+  google/gemini-2.5-flash:
+    input: 0.0003
+    output: 0.0015
+
+  # OpenAI open-source model — sehr günstig, gut für strukturierte Lookups.
+  # Preise OpenRouter Stand 2026-05-25 (Provider Fireworks/Groq).
+  openai/gpt-oss-120b:
+    input: 0.0002
+    output: 0.0006
+
+  # GPT-4o-mini — offizieller OpenAI-Mini, openrouter:web_search server-tool
+  # bestätigt funktionsfähig. Nachfolger von gpt-oss-120b im research-Agent.
+  # Preise OpenRouter Stand 2026-05-29.
+  openai/gpt-4o-mini:
+    input: 0.00015
+    output: 0.0006
+
+# Fallback — wird verwendet wenn die Modell-ID hier nicht gelistet ist.
+# Bewusst hoch angesetzt, damit "missing pricing" sichtbar wird.
+default:
+  input: 0.010
+  output: 0.030
+  note: "fallback — Modell nicht in pricing.yaml gepflegt"
+
+# OpenRouter server-tool pricing (geprüft 2026-05-25).
+server_tools:
+  web_search:
+    cost_per_request_usd: 0.005
+    engine_default: "auto"
+    note: "openrouter:web_search via Exa engine, $0.005/request für die ersten 10 Ergebnisse"

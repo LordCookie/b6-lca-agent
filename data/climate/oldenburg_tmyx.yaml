@@ -1,0 +1,31 @@
+# Klimadatensatz für die Monatsbilanz (DIN V 18599-2).
+#
+# QUELLE-PLATZHALTER: Diese Werte sind langjährige Mittel für die Region
+# Bremen/Oldenburg (DWD-Klimaatlas, Bezugsperiode 1991-2020), eingelegt als
+# Demo-Daten. Für den finalen Lauf der Thesis durch einen echten TMYx-Auszug
+# (Lawrie & Crawley) für die Station Oldenburg ersetzen.
+#
+# Format pro Monat:
+#   month                  - 1..12
+#   theta_e_C              - Mittlere Außenlufttemperatur [°C]
+#   I_S_horizontal_kWh_m2  - Monatssumme globale Horizontalstrahlung [kWh/m²]
+#   days                   - Tage im Monat
+
+source: "DWD Norddeutschland 1991-2020 (Platzhalter — durch TMYx Oldenburg ersetzen)"
+location: "Oldenburg, DE"
+elevation_m: 5
+heating_setpoint_C_default: 20.0   # θ_i,h,set — überschreibbar durch Nutzungsprofil
+
+months:
+  - {month:  1, theta_e_C:  2.1, I_S_horizontal_kWh_m2:  20, days: 31}
+  - {month:  2, theta_e_C:  2.5, I_S_horizontal_kWh_m2:  35, days: 28}
+  - {month:  3, theta_e_C:  5.4, I_S_horizontal_kWh_m2:  70, days: 31}
+  - {month:  4, theta_e_C:  8.9, I_S_horizontal_kWh_m2: 110, days: 30}
+  - {month:  5, theta_e_C: 13.1, I_S_horizontal_kWh_m2: 150, days: 31}
+  - {month:  6, theta_e_C: 16.0, I_S_horizontal_kWh_m2: 155, days: 30}
+  - {month:  7, theta_e_C: 17.9, I_S_horizontal_kWh_m2: 145, days: 31}
+  - {month:  8, theta_e_C: 17.4, I_S_horizontal_kWh_m2: 125, days: 31}
+  - {month:  9, theta_e_C: 13.9, I_S_horizontal_kWh_m2:  85, days: 30}
+  - {month: 10, theta_e_C:  9.8, I_S_horizontal_kWh_m2:  50, days: 31}
+  - {month: 11, theta_e_C:  5.6, I_S_horizontal_kWh_m2:  22, days: 30}
+  - {month: 12, theta_e_C:  3.0, I_S_horizontal_kWh_m2:  15, days: 31}

@@ -1,0 +1,45 @@
+# Pinned for reproducibility (Methodenteil der Thesis).
+# Web/API
+fastapi==0.115.6
+uvicorn[standard]==0.32.1
+pydantic==2.10.3
+pydantic-settings==2.7.0
+python-multipart==0.0.20
+
+# LLM client (OpenAI-compatible, used against OpenRouter)
+httpx==0.28.1
+openai==1.58.1
+PyYAML==6.0.2
+
+# Self-hosted web search (keyless DuckDuckGo) — replaces OpenRouter's
+# unreliable server-side web_search tool. Package was renamed
+# duckduckgo-search → ddgs; web_search.py imports either name.
+ddgs>=6.0,<10
+
+# Geo stack
+shapely==2.0.6
+pyproj==3.7.0
+geopandas==1.0.1
+rasterio==1.4.3
+fiona==1.10.1
+osmnx==2.0.4
+requests==2.32.3
+
+# ML / DEEPNESS inference (lokal, ohne Cloud)
+onnxruntime==1.20.1
+numpy==2.2.0
+Pillow==11.0.0
+scipy==1.14.1
+
+# Numerics / reporting
+pandas==2.2.3
+matplotlib==3.10.0
+openpyxl==3.1.5
+
+# PDF export (report.md → HTML → PDF mit Print-CSS)
+markdown==3.7
+weasyprint==63.1
+
+# Logging / utils
+structlog==24.4.0
+tenacity==9.0.0

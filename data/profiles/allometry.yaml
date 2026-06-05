@@ -1,0 +1,76 @@
+# Allometrische Parameter für die CO₂-Bestandsschätzung (Spec §8).
+#
+# Diese Werte beschreiben die Kette: Kronendurchmesser → BHD → AGB → C → CO₂.
+# Bewusst generisch (gemischte Stadtbaumarten), nicht artspezifisch — eine
+# artbasierte Verfeinerung wäre die nächste Stufe und ist als Limitation
+# im Methodenteil zu nennen.
+#
+# Reproduzierbarkeit: Diese Datei wird ins manifest.json mitgeschrieben.
+
+source: "Pretzsch et al. 2015 (Stadtbaum-Allometrie) + IPCC 2006 Vol.4 Ch.4 (R:S, C-Anteil)"
+
+# Crown diameter (m) -> DBH at breast height (cm).
+# Pretzsch et al. (2015) for mixed urban species: DBH ≈ a · CD^b
+# Vereinfachte Linearform (b=1) reicht für Cluster-Schätzung; arten-
+# spezifische b≠1 wäre die nächste Verfeinerung.
+crown_diameter_to_dbh:
+  a: 6.5          # DBH[cm] ≈ 6.5 × CD[m] für Mischbestand
+  b: 1.0
+  uncertainty_rel: 0.30
+
+# DBH (cm) -> aboveground biomass (kg dry mass).
+# Generic AGB = a · DBH^b nach Zianis & Mencuccini (2003) Tab. 1, urban mix.
+dbh_to_aboveground_biomass:
+  a: 0.0509
+  b: 2.500
+  uncertainty_rel: 0.40   # allometrische Streuung dominiert die Gesamtunsicherheit
+
+# Root:shoot ratio (IPCC 2006 Vol.4 Tab. 4.4, temperate broadleaf >75 t/ha)
+belowground_root_shoot_ratio: 0.27
+
+# Carbon fraction of dry biomass (IPCC default).
+carbon_fraction: 0.50
+
+# Stoichiometric CO₂/C conversion (molar mass ratio 44/12).
+co2_per_carbon: 3.667
+
+# Minimum crown area (m²) below which a detection is discarded as noise
+# (sub-tree shrubs, segmentation artefacts).
+min_crown_area_m2: 4.0
+
+# Maximum crown area (m²) above which a detection is split or capped —
+# very large blobs often mean two touching crowns the segmentation merged.
+# We don't actually split (would need watershed); we just cap to this value
+# and flag the detection so it shows up in the report.
+max_crown_area_m2: 250.0
+
+# --------------------------------------------------------------------------
+# Artgruppen-Allometrie (Spec §8 — Verfeinerung gegenüber dem generischen
+# Default oben). Der Research-/Vegetations-Agent recherchiert die dominante
+# Baumgruppe am Standort (mit zitierter Quelle) und wählt hier die passenden
+# Koeffizienten. Fällt die Recherche aus, bleibt der generische Default oben.
+#
+# WICHTIG (Methodenteil): Dies sind GRUPPENMITTEL aus der Literatur, keine
+# artgenauen Gleichungen. Laub-/Nadel-Trennung ist eine dokumentierte
+# Näherung; artexakte Allometrie bleibt eine genannte Limitation.
+species_groups:
+
+  laubbaum:
+    # Stadt-Laubbaum-Mischbestand (Linde, Ahorn, Eiche, Platane …)
+    crown_diameter_to_dbh: { a: 6.5, b: 1.0, uncertainty_rel: 0.30 }
+    dbh_to_aboveground_biomass: { a: 0.0509, b: 2.500, uncertainty_rel: 0.40 }
+    note: "Laubbaum-Mischbestand — Pretzsch et al. 2015 / Zianis & Mencuccini 2003 (urban broadleaf)"
+
+  nadelbaum:
+    # Nadelbaum-Gruppe (Fichte, Kiefer, Lärche …): schmalere Krone je BHD,
+    # geringere AGB je BHD (niedrigere Holzdichte). Gruppen-Näherung.
+    crown_diameter_to_dbh: { a: 7.5, b: 1.0, uncertainty_rel: 0.30 }
+    dbh_to_aboveground_biomass: { a: 0.0450, b: 2.480, uncertainty_rel: 0.40 }
+    note: "Nadelbaum-Gruppe — Näherung an Nadelholz-Allometrie (Gruppenmittel, geringere Holzdichte)"
+
+  mischbestand:
+    # Gemischt Laub/Nadel oder unbekannt → generischer Default mit etwas
+    # höherer Unsicherheit, da die Zusammensetzung offen ist.
+    crown_diameter_to_dbh: { a: 6.5, b: 1.0, uncertainty_rel: 0.35 }
+    dbh_to_aboveground_biomass: { a: 0.0509, b: 2.500, uncertainty_rel: 0.45 }
+    note: "Gemischter Bestand — generischer Default mit erhöhter Unsicherheit"

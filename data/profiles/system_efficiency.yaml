@@ -1,0 +1,25 @@
+# Anlagentechnik-Wirkungsgrade — vereinfacht.
+#
+# Eine volle DIN-V-18599-1-Anlagensimulation würde Erzeugung, Speicherung,
+# Verteilung und Übergabe getrennt modellieren. Für das Skelett gilt:
+#   eta_total = eta_generation * eta_distribution * eta_transfer
+# und wird als ein Faktor auf den Nutzwärmebedarf angewendet:
+#   Q_h,Endenergie = Q_h,Bedarf / eta_total
+#
+# Werte angelehnt an typische Erfahrungswerte; im Methodenteil als
+# Vereinfachung gegenüber 18599-1-Vollmodell deklarieren.
+
+fernwaerme:
+  source: "Erfahrungswert: Fernwärme-Übergabestation + Verteilung + Heizkörper"
+  eta_generation: 1.00
+  eta_distribution: 0.95
+  eta_transfer: 0.95
+  uncertainty_rel: 0.10
+  # eta_total = 0.9025
+
+electricity_direct:
+  source: "Direkte Stromnutzung (Beleuchtung/Geräte): Endenergie = Bedarf"
+  eta_total: 1.00
+  uncertainty_rel: 0.05
+
+# Erweiterbar: gas_condensing_boiler, heat_pump_air_water, …

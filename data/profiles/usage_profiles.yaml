@@ -1,0 +1,46 @@
+# Nutzungsprofile pro Zonentyp.
+#
+# Werte angelehnt an DIN V 18599-10:2018 (Tabellen für Bildung/Verpflegung).
+# Die exakten Tabellenwerte sind im Methodenteil der Thesis nachzuhalten;
+# diese Defaults sind als sinnvolle Startwerte gepflegt und über das
+# YAML ohne Code-Änderung anpassbar (Spec §5 Vergleichbarkeitsgebot).
+#
+# Felder pro Profil:
+#   source                        - Quellen-/Tabellenverweis (für sources.md)
+#   theta_i_set_heating_C         - Soll-Innentemperatur Heizen [°C]
+#   q_internal_W_per_m2           - Mittlere interne Wärmegewinne, NGF-bezogen [W/m²]
+#   q_electricity_kWh_per_m2a     - Beleuchtung + Geräte (NGF-bezogen) [kWh/m²a]
+#   air_change_rate_1_per_h       - Außenluftwechsel n [1/h]
+#   operation_hours_per_day       - Nutzungsstunden t_op [h/d]
+#   operation_days_per_year       - Nutzungstage [d/a]
+#   uncertainty_rel                - relative Standardunsicherheit (für Gauß-Fortpflanzung)
+
+UNIVERSITY:
+  source: "DIN V 18599-10:2018 Tabelle 'Hochschule, Hörsaal/Seminar'"
+  theta_i_set_heating_C: 20.0
+  q_internal_W_per_m2: 7.0
+  q_electricity_kWh_per_m2a: 25.0
+  air_change_rate_1_per_h: 0.7
+  operation_hours_per_day: 10
+  operation_days_per_year: 220
+  uncertainty_rel: 0.15
+
+RESTAURANT:
+  source: "DIN V 18599-10:2018 Tabelle 'Gastgewerbe, Restaurant'"
+  theta_i_set_heating_C: 20.0
+  q_internal_W_per_m2: 10.0
+  q_electricity_kWh_per_m2a: 60.0    # Küchengeräte erhöhen el. Bedarf deutlich
+  air_change_rate_1_per_h: 2.5       # erhöhte Lüftungsrate Gastronomie
+  operation_hours_per_day: 12
+  operation_days_per_year: 300
+  uncertainty_rel: 0.20
+
+OFFICE:
+  source: "DIN V 18599-10:2018 Tabelle 'Einzel-/Gruppenbüro'"
+  theta_i_set_heating_C: 20.0
+  q_internal_W_per_m2: 6.0
+  q_electricity_kWh_per_m2a: 30.0
+  air_change_rate_1_per_h: 0.7
+  operation_hours_per_day: 10
+  operation_days_per_year: 250
+  uncertainty_rel: 0.15

@@ -1,0 +1,41 @@
+# Mapping internal carrier keys -> ÖKOBAUDAT records (UUID + Modul).
+# Editable without rebuilding the image (mounted as read-only volume).
+#
+# Each entry pins:
+#   - the OBD UUID of the dataset
+#   - the life-cycle module to pick (B6 for operational end-energy)
+#   - a human-readable note for the report
+#
+# Spec §10 rule 4: provenance stays explicit — these UUIDs end up in
+# sources.md unchanged.
+
+heat_fernwaerme_swo:
+  oekobaudat_uuid: bff1909a-5383-49bb-a450-aa9543e7a9ee
+  oekobaudat_module: B6
+  display_name: "Fernwärme Mix Deutschland (ÖKOBAUDAT 2024-I)"
+  note: >
+    Generischer Fernwärme-Mix DE — wird verwendet, solange der
+    netzspezifische SWO-Faktor (AGFW FW-309) nicht in der zentralen
+    Lookup-Tabelle hinterlegt ist. Im Methodenteil als Sensitivität
+    deklarieren (Spec §5).
+
+electricity_grid:
+  oekobaudat_uuid: 669c531b-aa84-4d04-b96b-aa0f075952b3
+  oekobaudat_module: B6
+  display_name: "Strom für Gebäudebetrieb 2021 (ÖKOBAUDAT 2024-I)"
+  note: >
+    Strommix DE für Gebäudebetrieb, Bezugsjahr 2021. Bei
+    Aktualisierung des OBD-Snapshots auf neueres Bezugsjahr UUID
+    hier umpinnen.
+
+heat_erdgas:
+  oekobaudat_uuid: 2561c686-875a-44e5-8abe-47ec392d16ff
+  oekobaudat_module: B6
+  display_name: "Thermische Energie aus Erdgas (ÖKOBAUDAT 2024-I)"
+  note: "Endenergie Erdgas zur Wärmeerzeugung."
+
+heat_pellets:
+  oekobaudat_uuid: 500e3171-60de-4694-ade3-bb0cd3013a17
+  oekobaudat_module: B6
+  display_name: "Endenergie aus Holzpellets, GEG-konform (ÖKOBAUDAT 2024-I)"
+  note: "Endenergie Pellets nach GEG-Konvention."

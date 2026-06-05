@@ -1,0 +1,110 @@
+* { box-sizing: border-box; }
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.app {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: 100%;
+}
+
+.app header {
+  padding: 12px 18px;
+  background: #1f2937;
+  color: #f9fafb;
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.app header h1 { font-size: 16px; margin: 0; }
+.app header .subtitle { font-size: 12px; opacity: 0.7; }
+
+.app main {
+  display: grid;
+  /* Sidebar deutlich breiter (vorher 380px) damit die Cluster-Tabelle und
+     Charts sauber lesbar sind — die Map bekommt den Rest. */
+  grid-template-columns: 1fr 620px;
+  min-height: 0;
+}
+
+@media (max-width: 1280px) {
+  /* Schmale Bildschirme: Sidebar auf 480px reduzieren, sonst bleibt zu wenig Karte. */
+  .app main {
+    grid-template-columns: 1fr 480px;
+  }
+}
+
+#map { width: 100%; height: 100%; }
+
+.sidebar {
+  border-left: 1px solid #e5e7eb;
+  padding: 16px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sidebar h2 { font-size: 14px; margin: 0 0 4px; }
+
+button {
+  cursor: pointer;
+  padding: 8px 14px;
+  border: 1px solid #1f2937;
+  background: #1f2937;
+  color: white;
+  border-radius: 4px;
+}
+button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.steps { list-style: none; padding: 0; margin: 0; }
+.steps li {
+  padding: 6px 8px;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #f3f4f6;
+  font-size: 13px;
+}
+.steps li .status { font-variant: small-caps; opacity: 0.7; }
+.steps li.running .status { color: #2563eb; }
+.steps li.done    .status { color: #16a34a; }
+.steps li.failed  .status { color: #dc2626; }
+
+pre.report {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  padding: 12px;
+  font-size: 12px;
+  white-space: pre-wrap;
+  overflow: auto;
+  max-height: 50vh;
+}
+
+.results-view {
+  display: flex;
+  flex-direction: column;
+}
+
+.result-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+.result-table th,
+.result-table td {
+  padding: 4px 6px;
+  border-bottom: 1px solid #f3f4f6;
+  text-align: left;
+}
+.result-table th {
+  background: #f9fafb;
+  font-weight: 600;
+}
+.result-table tbody tr:hover {
+  background: #f9fafb;
+}
